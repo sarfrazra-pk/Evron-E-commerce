@@ -1,0 +1,50 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "cv1BP2O9WkzJd20UDE_oS"
+uri = "file://artifacts/evron/public/images/hero-banner.png"
+type = "image"
+title = "Hero banner laptop desk"
+
+[[generated]]
+id = "EmUBztJMWiqN-YFJU4YWL"
+uri = "file://artifacts/evron/public/images/category-electronics.png"
+type = "image"
+title = "Electronics category image"
+
+[[generated]]
+id = "qync4K0IVBlkzB6xyDp7H"
+uri = "file://artifacts/evron/public/images/category-fashion.png"
+type = "image"
+title = "Fashion category image"
+
+[[generated]]
+id = "nQcznbjKB8P7BC6tZnu5V"
+uri = "file://artifacts/evron/public/images/category-home.png"
+type = "image"
+title = "Home goods category image"
+
+[[generated]]
+id = "ft2SY0kzwPahmfzl1z2tJ"
+uri = "file://artifacts/evron/public/images/product-headphones.png"
+type = "image"
+title = "Product wireless headphones"
+
+[[generated]]
+id = "Z3faG7i7eq0hPqUb9JE-H"
+uri = "file://artifacts/evron/public/images/product-watch.png"
+type = "image"
+title = "Product luxury watch"
+
+[[generated]]
+id = "peNhTARJ4JvQg2tFQJN7n"
+uri = "file://artifacts/evron/public/images/product-perfume.png"
+type = "image"
+title = "Product perfume"
+
+[[generated]]
+id = "f0B7GVtFBXfuvF1ELmo83"
+uri = "file://artifacts/evron/public/images/product-wallet.png"
+type = "image"
+title = "Product leather wallet"
