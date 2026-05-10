@@ -126,10 +126,6 @@ export default function Header() {
             </button>
           </Link>
 
-          <Button size="sm" className="hidden md:flex" asChild>
-            <Link href="/editor">Page Editor</Link>
-          </Button>
-
           <button className="md:hidden p-2 rounded-lg hover:bg-muted" onClick={() => setMenuOpen(o => !o)}>
             <Menu className="w-5 h-5" />
           </button>

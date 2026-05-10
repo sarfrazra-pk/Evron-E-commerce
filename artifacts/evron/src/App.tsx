@@ -11,6 +11,7 @@ import Category from "@/pages/Category";
 import Search from "@/pages/Search";
 import Cart from "@/pages/Cart";
 import Editor from "@/pages/Editor";
+import DragEditor from "@/pages/DragEditor";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ function Router() {
       <Route path="/search" component={Search} />
       <Route path="/cart" component={Cart} />
       <Route path="/editor" component={Editor} />
+      <Route path="/evron-builder" component={DragEditor} />
       <Route component={NotFound} />
     </Switch>
   );
