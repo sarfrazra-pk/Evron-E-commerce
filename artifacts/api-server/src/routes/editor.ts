@@ -6,11 +6,12 @@ import { SaveEditorConfigBody } from "@workspace/api-zod";
 const router: IRouter = Router();
 
 const DEFAULT_SECTIONS = [
-  { sectionId: "hero", type: "hero", order: 0, visible: true, data: { title: "Evron", subtitle: "The trust we build" } },
+  { sectionId: "hero", type: "hero", order: 0, visible: true, data: { heroTitle: "EVRON", heroSlogan: "The trust we build", heroSubtitle: "Pakistan's Premium Marketplace" } },
   { sectionId: "categories", type: "categories", order: 1, visible: true, data: {} },
   { sectionId: "featured", type: "featured", order: 2, visible: true, data: { title: "Featured Products" } },
-  { sectionId: "new-arrivals", type: "new-arrivals", order: 3, visible: true, data: { title: "New Arrivals" } },
-  { sectionId: "promo", type: "promo", order: 4, visible: true, data: { text: "Up to 50% off on selected items" } },
+  { sectionId: "promo", type: "promo", order: 3, visible: true, data: { promoHeading: "Up to 50% Off", promoSubheading: "On selected electronics, fashion and more", promoCtaText: "Grab the Deals" } },
+  { sectionId: "new-arrivals", type: "new-arrivals", order: 4, visible: true, data: { title: "New Arrivals" } },
+  { sectionId: "theme", type: "theme", order: 99, visible: false, data: { primary: "#f59e0b", secondary: "#1e2d4f", background: "#f7f8fa" } },
 ];
 
 async function ensureDefaultSections() {
