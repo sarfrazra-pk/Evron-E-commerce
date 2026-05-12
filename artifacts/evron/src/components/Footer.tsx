@@ -25,19 +25,13 @@ export default function Footer() {
         <div>
           <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">Customer Service</h4>
           <ul className="space-y-2 text-sm text-secondary-foreground/70">
-            <li><a href="#" className="hover:text-primary transition-colors">Help Center</a></li>
-            <li><a href="#" className="hover:text-primary transition-colors">Track Order</a></li>
-            <li><a href="#" className="hover:text-primary transition-colors">Returns & Refunds</a></li>
-            <li><a href="#" className="hover:text-primary transition-colors">Contact Us</a></li>
+            <li><Link href="/contact" className="hover:text-primary transition-colors">Contact Us</Link></li>
           </ul>
         </div>
         <div>
           <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider">About Evron</h4>
           <ul className="space-y-2 text-sm text-secondary-foreground/70">
-            <li><a href="#" className="hover:text-primary transition-colors">About Us</a></li>
-            <li><a href="#" className="hover:text-primary transition-colors">Careers</a></li>
-            <li><a href="#" className="hover:text-primary transition-colors">Press</a></li>
-            <li><a href="#" className="hover:text-primary transition-colors">Blog</a></li>
+            <li><Link href="/about" className="hover:text-primary transition-colors">About Us</Link></li>
           </ul>
         </div>
       </div>

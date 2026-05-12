@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import {
-  GripVertical, Eye, EyeOff, Lock, RotateCcw, CheckCircle,
-  Pencil, Palette, LayoutDashboard, Package, Type,
-  Plus, Trash2, Save, X, ChevronUp, ChevronDown, Star, Image as ImageIcon,
+  GripVertical, Eye, EyeOff, Lock, CheckCircle,
+  Pencil, Palette, LayoutDashboard, Package, Type, FileText,
+  Plus, Trash2, Save, X, ChevronUp, ChevronDown, ExternalLink,
 } from "lucide-react";
 import {
   useGetEditorConfig, useSaveEditorConfig, getGetEditorConfigQueryKey,
@@ -57,7 +57,7 @@ function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
    Types
 ───────────────────────────────────────── */
 interface Section { id: string; type: string; order: number; visible: boolean; data: Record<string, unknown> }
-type Tab = "layout" | "colors" | "products" | "content";
+type Tab = "layout" | "colors" | "products" | "content" | "pages";
 
 const SECTION_META: Record<string, { label: string; icon: string; color: string }> = {
   hero:          { label: "Hero Banner",        icon: "🖼️", color: "border-indigo-200 bg-indigo-50" },
@@ -582,6 +582,134 @@ function PreviewPanel({ sections }: { sections: Section[] }) {
 }
 
 /* ─────────────────────────────────────────
+   TAB 5: Pages
+───────────────────────────────────────── */
+function PagesTab({ sections, setSectionsAndSave }: {
+  sections: Section[];
+  setSectionsAndSave: (s: Section[]) => void;
+}) {
+  const [openPage, setOpenPage] = useState<"about" | "contact" | null>("about");
+
+  function setField(sectionType: string, key: string, value: string) {
+    const exists = sections.find(s => s.type === sectionType);
+    if (exists) {
+      setSectionsAndSave(sections.map(s =>
+        s.type === sectionType ? { ...s, data: { ...s.data, [key]: value } } : s
+      ));
+    }
+  }
+
+  function getVal(sectionType: string, key: string, fallback: string) {
+    const s = sections.find(s => s.type === sectionType);
+    return (s?.data?.[key] as string) || fallback;
+  }
+
+  const Field = ({ type, fieldKey, label, placeholder, multiline = false, hint }: {
+    type: string; fieldKey: string; label: string; placeholder: string; multiline?: boolean; hint?: string;
+  }) => (
+    <div>
+      <label className="text-xs font-semibold text-slate-600 block mb-1">{label}</label>
+      {multiline ? (
+        <textarea
+          value={getVal(type, fieldKey, "")}
+          onChange={e => setField(type, fieldKey, e.target.value)}
+          rows={3}
+          placeholder={placeholder}
+          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 resize-none"
+        />
+      ) : (
+        <input
+          value={getVal(type, fieldKey, "")}
+          onChange={e => setField(type, fieldKey, e.target.value)}
+          placeholder={placeholder}
+          className="w-full px-3 py-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
+        />
+      )}
+      {hint && <p className="text-xs text-slate-400 mt-0.5">{hint}</p>}
+    </div>
+  );
+
+  return (
+    <div className="space-y-3">
+      <p className="text-xs text-slate-500 mb-4">Edit the content on your About Us and Contact Us pages. Changes auto-save instantly.</p>
+
+      {/* About Us card */}
+      <div className="rounded-2xl border-2 border-indigo-200 bg-indigo-50 overflow-hidden">
+        <button
+          onClick={() => setOpenPage(openPage === "about" ? null : "about")}
+          className="w-full flex items-center gap-3 px-4 py-3 hover:bg-indigo-100 transition-colors"
+        >
+          <span className="text-xl">📄</span>
+          <div className="flex-1 text-left">
+            <p className="font-bold text-sm text-slate-800">About Us Page</p>
+            <p className="text-xs text-slate-500">Heading, mission, story, values, team</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <a
+              href="/about" target="_blank" rel="noopener noreferrer"
+              onClick={e => e.stopPropagation()}
+              className="p-1.5 rounded-lg bg-indigo-100 hover:bg-indigo-200 text-indigo-600 transition-colors"
+              title="Preview page"
+            >
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+            <span className="text-slate-400 text-xs">{openPage === "about" ? "▲" : "▼"}</span>
+          </div>
+        </button>
+
+        {openPage === "about" && (
+          <div className="px-4 pb-5 pt-2 border-t border-indigo-200 space-y-3 bg-white">
+            <Field type="page-about" fieldKey="heading"  label="Page Heading"     placeholder="About Evron" />
+            <Field type="page-about" fieldKey="tagline"  label="Tagline / Slogan" placeholder="The trust we build" />
+            <Field type="page-about" fieldKey="mission"  label="Our Mission"      placeholder="Describe your mission..." multiline />
+            <Field type="page-about" fieldKey="story"    label="Our Story"        placeholder="Tell your brand story..." multiline />
+            <Field type="page-about" fieldKey="values"   label="Our Values"       placeholder="What you stand for..." multiline />
+            <Field type="page-about" fieldKey="team"     label="Our Team"         placeholder="Describe your team..." multiline />
+          </div>
+        )}
+      </div>
+
+      {/* Contact Us card */}
+      <div className="rounded-2xl border-2 border-rose-200 bg-rose-50 overflow-hidden">
+        <button
+          onClick={() => setOpenPage(openPage === "contact" ? null : "contact")}
+          className="w-full flex items-center gap-3 px-4 py-3 hover:bg-rose-100 transition-colors"
+        >
+          <span className="text-xl">✉️</span>
+          <div className="flex-1 text-left">
+            <p className="font-bold text-sm text-slate-800">Contact Us Page</p>
+            <p className="text-xs text-slate-500">Heading, email, phone, address, hours</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <a
+              href="/contact" target="_blank" rel="noopener noreferrer"
+              onClick={e => e.stopPropagation()}
+              className="p-1.5 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-600 transition-colors"
+              title="Preview page"
+            >
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+            <span className="text-slate-400 text-xs">{openPage === "contact" ? "▲" : "▼"}</span>
+          </div>
+        </button>
+
+        {openPage === "contact" && (
+          <div className="px-4 pb-5 pt-2 border-t border-rose-200 space-y-3 bg-white">
+            <Field type="page-contact" fieldKey="heading"   label="Page Heading"    placeholder="Contact Us" />
+            <Field type="page-contact" fieldKey="subtext"   label="Intro Text"      placeholder="We are here to help..." multiline />
+            <Field type="page-contact" fieldKey="email"     label="Email Address"   placeholder="support@evron.pk" hint="Shown as a clickable link" />
+            <Field type="page-contact" fieldKey="phone"     label="Phone Number"    placeholder="+92 300 0000000" hint="Shown as a clickable link" />
+            <Field type="page-contact" fieldKey="address"   label="Address"         placeholder="Karachi, Pakistan" />
+            <Field type="page-contact" fieldKey="hours"     label="Business Hours"  placeholder="Monday – Saturday: 9am – 6pm" />
+            <Field type="page-contact" fieldKey="extraInfo" label="Extra Note"      placeholder="Any extra info for customers..." multiline />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────
    Main Builder
 ───────────────────────────────────────── */
 function Builder() {
@@ -621,6 +749,7 @@ function Builder() {
     { id: "colors",   label: "Colors",   icon: <Palette className="w-4 h-4" /> },
     { id: "products", label: "Products", icon: <Package className="w-4 h-4" /> },
     { id: "content",  label: "Content",  icon: <Type className="w-4 h-4" /> },
+    { id: "pages",    label: "Pages",    icon: <FileText className="w-4 h-4" /> },
   ];
 
   return (
@@ -666,6 +795,7 @@ function Builder() {
                 {tab === "colors"   && <ColorsTab   sections={sections} setSectionsAndSave={setSectionsAndSave} />}
                 {tab === "products" && <ProductsTab />}
                 {tab === "content"  && <ContentTab  sections={sections} setSectionsAndSave={setSectionsAndSave} />}
+                {tab === "pages"    && <PagesTab    sections={sections} setSectionsAndSave={setSectionsAndSave} />}
               </>
             )}
           </div>
